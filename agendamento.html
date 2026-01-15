@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitação de Diagnóstico | Clínica IA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        .booking-page {
+            padding: 12rem 0 4rem;
+            min-height: 100vh;
+            background: radial-gradient(circle at top right, rgba(0, 210, 255, 0.05), transparent);
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .form-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .form-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .luxury-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--white);
+            font-family: var(--font-body);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .qualification-note {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(0, 210, 255, 0.05);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .btn-submit {
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .booking-page {
+                padding-top: 10rem;
+            }
+
+            .form-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar">
+            <div class="container">
+                <a href="/" class="logo">
+                    <img src="/Luya.png" alt="Logo" style="height: 70px; width: auto;">
+                </a>
+            </div>
+        </nav>
+
+        <section class="booking-page">
+            <div class="container">
+                <div class="form-container">
+                    <div class="form-header fade-in-up">
+                        <h1>Diagnóstico Estratégico</h1>
+                        <p>Preencha os dados abaixo. Analisaremos seu perfil para verificar a compatibilidade.</p>
+                    </div>
+
+                    <form action="#" class="luxury-form glass-panel reveal" id="qualificationForm">
+                        <div class="form-group">
+                            <label for="owner">Nome completo</label>
+                            <input type="text" id="owner" name="Nome completo" placeholder="Seu nome" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="clinic">Clínica e Localização</label>
+                            <input type="text" id="clinic" name="Clínica e Localização"
+                                placeholder="Clínica / Localização" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="whatsapp">WhatsApp (+244)</label>
+                            <input type="tel" id="whatsapp" name="WhatsApp" placeholder="9XX XXX XXX" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="volume">Contactos novos / dia</label>
+                            <input type="number" id="volume" name="Contactos novos / dia" placeholder="Quantidade"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="staff">Equipa de atendimento</label>
+                            <input type="number" id="staff" name="Equipa de atendimento"
+                                placeholder="Nº de funcionárias" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="revenue">Faturamento Mensal</label>
+                            <select id="revenue" name="Faturamento Mensal" required>
+                                <option value="" disabled selected>Escolha uma opção</option>
+                                <option value="500k">Até 500k Kz</option>
+                                <option value="500k-2M">500k a 2M Kz</option>
+                                <option value="2M-5M">2M a 5M Kz</option>
+                                <option value="5M+">Acima de 5M Kz</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bottleneck">Maior dificuldade hoje?</label>
+                            <textarea id="bottleneck" name="Maior dificuldade hoje?" rows="2"
+                                placeholder="O que te impede de crescer?" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="investment">Pretende investir agora?</label>
+                            <select id="investment" name="Pretende investir agora?" required>
+                                <option value="" disabled selected>Escolha uma opção</option>
+                                <option value="ready">Sim, quero começar agora</option>
+                                <option value="planning">Próximos 30 dias</option>
+                                <option value="curious">Apenas curiosidade</option>
+                            </select>
+                        </div>
+
+                        <div class="qualification-note">
+                            "Ao clicar no botão abaixo, a nossa equipa de especialistas em Luanda irá analisar os seus
+                            dados. Se a sua clínica preencher os requisitos de escala, entraremos em contacto para
+                            agendar o diagnóstico via Zoom ou Presencial."
+                        </div>
+
+                        <button type="submit" class="btn-primary btn-submit pulse">ENVIAR SOLICITAÇÃO E AGENDAR
+                            DIAGNÓSTICO</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2026 Inovação. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+    </div>
+    <script type="module" src="./main.js"></script>
+</body>
+
+</html>

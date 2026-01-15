@@ -1,0 +1,13 @@
+{
+    "cleanUrls": true,
+    "rewrites": [
+        {
+            "source": "/agendamento",
+            "destination": "/agendamento.html"
+        },
+        {
+            "source": "/obrigado",
+            "destination": "/obrigado.html"
+        }
+    ]
+}

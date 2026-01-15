@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Próximo Nível | Clínica IA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        .thanks-page {
+            padding: 8rem 0 4rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(112, 224, 0, 0.05), transparent);
+        }
+
+        .thanks-container {
+            max-width: 800px;
+            padding: 0 1.5rem;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            display: block;
+            animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .thanks-header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1.5rem;
+            color: var(--white);
+            line-height: 1.2;
+        }
+
+        .thanks-header p {
+            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            background: rgba(112, 224, 0, 0.1);
+            padding: 1rem;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .thanks-body {
+            text-align: left;
+            margin-top: 3rem;
+        }
+
+        .thanks-body p {
+            font-size: 1.15rem;
+            color: var(--text-main);
+            margin-bottom: 2rem;
+        }
+
+        .next-steps {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-num {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            color: var(--bg-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .step-text strong {
+            display: block;
+            color: var(--white);
+            margin-bottom: 0.3rem;
+        }
+
+        .warning-box {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: rgba(255, 95, 86, 0.1);
+            border: 1px solid rgba(255, 95, 86, 0.2);
+            border-radius: 12px;
+            color: #ff5f56;
+            font-weight: 600;
+        }
+
+        .wa-simulation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 300px;
+            z-index: 1000;
+            transform: translateY(200px);
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .wa-simulation.active {
+            transform: translateY(0);
+        }
+
+        @keyframes bounceIn {
+            from {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .wa-simulation {
+                width: calc(100% - 40px);
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+            }
+
+            .next-steps {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar">
+            <div class="container">
+                <a href="/" class="logo">
+                    <img src="/Luya.png" alt="Logo" style="height: 70px; width: auto;">
+                </a>
+            </div>
+        </nav>
+
+        <section class="thanks-page">
+            <div class="thanks-container">
+                <div class="thanks-header fade-in-up">
+                    <span class="success-icon">✅</span>
+                    <h1>Sua solicitação foi enviada. Agora, olhe para o seu WhatsApp.</h1>
+                    <p>PROTOCOLO DE DEMONSTRAÇÃO ATIVADO</p>
+                </div>
+
+                <div class="thanks-body glass-panel reveal">
+                    <p>Enquanto você lê este texto, o nosso sistema já processou os seus dados e iniciou o atendimento.
+                        É exatamente essa velocidade que os seus pacientes terão a partir de agora.</p>
+
+                    <div class="next-steps">
+                        <div class="step-item">
+                            <div class="step-num">1</div>
+                            <div class="step-text">
+                                <strong>Validação Imediata</strong>
+                                <span>Nossa IA vai validar o seu interesse no WhatsApp agora mesmo.</span>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-num">2</div>
+                            <div class="step-text">
+                                <strong>Análise de Perfil</strong>
+                                <span>Um de nossos especialistas em Luanda analisará o seu perfil de escala.</span>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-num">3</div>
+                            <div class="step-text">
+                                <strong>Agendamento</strong>
+                                <span>Se houver compatibilidade, agendaremos a sua sessão de Diagnóstico
+                                    Estratégico.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        ⚠️ Aviso: Não responda à IA se você não estiver pronto para escalar. Nós levamos o crescimento
+                        de nossos parceiros muito a sério.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic WA Simulation Notification -->
+        <div class="wa-simulation glass-card" id="waNotification">
+            <div class="dashboard-mock" style="padding: 1rem;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                    <div style="width: 10px; height: 10px; background: #27c93f; border-radius: 50%;"></div>
+                    <span style="font-size: 0.8rem; font-weight: 700;">WHATSAPP: NOVA MENSAGEM</span>
+                </div>
+                <div class="chat-bubble right ai" style="margin-bottom: 0; font-size: 0.85rem;">
+                    Olá! 👋 Vi que acabou de solicitar um diagnóstico para a sua clínica...
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2026 Inovação. Todos os direitos reservados.</p>
+            </div>
+        </footer>
+    </div>
+    <script type="module" src="./main.js"></script>
+    <script>
+        // Trigger simulation notification
+        setTimeout(() => {
+            const nav = document.getElementById('waNotification');
+            if (nav) nav.classList.add('active');
+
+            // Play a subtle notification sound (optional, but might be too much)
+            // Or just visual is fine.
+        }, 3000);
+    </script>
+</body>
+
+</html>
