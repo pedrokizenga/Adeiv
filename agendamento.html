@@ -7,9 +7,8 @@
     <title>Solicitação de Diagnóstico | Clínica IA</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&display=swap"
-        rel="stylesheet">
+    rel="stylesheet">
+    <link rel="icon" type="image/png" href="/Luya.png">
     <link rel="stylesheet" href="./style.css">
     <style>
         .booking-page {
@@ -90,9 +89,16 @@
             line-height: 1.5;
         }
 
-        .btn-submit {
-            margin-top: 1rem;
+        .form-actions {
+            display: flex;
+            justify-content: center;
             width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn-submit {
+            width: fit-content;
+            padding: 1.2rem 4rem;
         }
 
         @media (max-width: 600px) {
@@ -132,9 +138,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="clinic">Clínica e Localização</label>
-                            <input type="text" id="clinic" name="Clínica e Localização"
-                                placeholder="Clínica / Localização" required>
+                            <label for="clinic">Nome da Clínica</label>
+                            <input type="text" id="clinic" name="Clinica" placeholder="Nome da Clínica" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">Localização</label>
+                            <input type="text" id="location" name="Localizacao" placeholder="Cidade / Bairro" required>
                         </div>
 
                         <div class="form-group">
@@ -181,24 +191,25 @@
                             </select>
                         </div>
 
-                        <div class="qualification-note">
-                            "Ao clicar no botão abaixo, a nossa equipa de especialistas em Luanda irá analisar os seus
-                            dados. Se a sua clínica preencher os requisitos de escala, entraremos em contacto para
-                            agendar o diagnóstico via Zoom ou Presencial."
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary btn-submit pulse">ENVIAR SOLICITAÇÃO</button>
                         </div>
-
-                        <button type="submit" class="btn-primary btn-submit pulse">ENVIAR SOLICITAÇÃO E AGENDAR
-                            DIAGNÓSTICO</button>
-                    </form>
                 </div>
+                </form>
             </div>
-        </section>
+    </div>
+    </section>
 
-        <footer class="footer">
-            <div class="container">
-                <p>&copy; 2026 Inovação. Todos os direitos reservados.</p>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo" style="margin-bottom: 1.5rem; opacity: 0.8;">
+                <img src="/Luya.png" alt="Logo" style="height: 65px; width: auto;">
             </div>
-        </footer>
+            <div class="container">
+                <p>&copy; 2026 Adeiv Business. Todos os direitos reservados.</p>
+            </div>
+    </footer>
     </div>
     <script type="module" src="./main.js"></script>
 </body>

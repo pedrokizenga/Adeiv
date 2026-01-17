@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Controle | Adeiv</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/png" href="/Luya.png">
+    <link rel="stylesheet" href="./style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .dashboard-container {
+            padding-top: 6rem;
+            min-height: 100vh;
+            background: #05070a;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        /* Password Modal */
+        #authOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 7, 10, 0.95);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-box {
+            background: var(--bg-card);
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .auth-input {
+            padding: 0.8rem;
+            margin: 1rem 0;
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: white;
+            border-radius: 6px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        .stat-card .trend {
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        /* Charts Section */
+        .charts-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: 350px;
+        }
+
+        /* Data Table */
+        .leads-table-container {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-top: 2rem;
+        }
+
+        .leads-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .leads-table th,
+        .leads-table td {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+        }
+
+        .leads-table th {
+            color: var(--white);
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tag {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .tag.utm {
+            background: rgba(0, 210, 255, 0.1);
+            color: var(--primary);
+        }
+
+        .tag.organic {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+        }
+
+        /* Mobile adjustments */
+        @media(max-width: 600px) {
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Simple Auth Protection -->
+    <div id="authOverlay">
+        <div class="auth-box">
+            <h2>Acesso Restrito</h2>
+            <p>Digite a senha de administrador</p>
+            <input type="password" id="adminPass" class="auth-input" placeholder="Senha">
+            <button onclick="checkAuth()" class="btn-primary" style="width: 100%; padding: 0.8rem;">ENTRAR</button>
+            <p id="errorMsg" style="color: #ff5f56; font-size: 0.9rem; margin-top: 10px; display: none;">Senha
+                incorreta.</p>
+        </div>
+    </div>
+
+    <div class="dashboard-container" id="dashboardContent" style="display: none;">
+        <div class="container">
+            <div class="dashboard-header">
+                <div>
+                    <h1>Dashboard de Performance</h1>
+                    <p class="text-muted">Visão geral dos leads e métricas de campanhas</p>
+                </div>
+                <button onclick="refreshData()" class="btn-nav">🔄 Atualizar</button>
+            </div>
+
+            <!-- Warning if Supabase keys missing -->
+            <div id="supabaseWarning"
+                style="display: none; background: #331111; color: #ff5f56; padding: 1rem; border-radius: 8px; margin-bottom: 2rem;">
+                ⚠️ Supabase não detectado. O painel está mostrando dados simulados.
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Leads</h3>
+                    <div class="value" id="totalLeads">0</div>
+                    <span class="trend">Todas as fontes</span>
+                </div>
+                <div class="stat-card">
+                    <h3>Hoje</h3>
+                    <div class="value" id="todayLeads">0</div>
+                    <span class="trend">Novos hoje</span>
+                </div>
+                <div class="stat-card">
+                    <h3>Alta Prioridade</h3>
+                    <div class="value" id="hotLeads">0</div>
+                    <span class="trend text-accent">Faturamento 5M+</span>
+                </div>
+                <div class="stat-card">
+                    <h3>Top Campanha</h3>
+                    <div class="value" id="topCampaign"
+                        style="font-size: 1.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">...
+                    </div>
+                    <span class="trend">Mais ativa</span>
+                </div>
+            </div>
+
+            <div class="charts-row">
+                <div class="chart-box">
+                    <canvas id="sourceChart"></canvas>
+                </div>
+                <div class="chart-box">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+
+            <h3>Últimos Leads (Tempo Real)</h3>
+            <div class="leads-table-container">
+                <table class="leads-table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Nome / Clínica</th>
+                            <th>WhatsApp</th>
+                            <th>Origem (UTM)</th>
+                            <th>Faturamento</th>
+                            <th>Intenção</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leadsTableBody">
+                        <tr>
+                            <td colspan="6" style="text-align: center;">Carregando dados...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="./painel-administrativo-v1.js"></script>
+
+    <script>
+        // Simple client-side auth (NOT SECURE for sensitive data, but stops casual lurking)
+        // In a real app, use Supabase Auth.
+        function checkAuth() {
+            const pass = document.getElementById('adminPass').value;
+            // Hardcoded simple password for the user
+            if (pass === 'admin123' || pass === 'adeiv2026') {
+                document.getElementById('authOverlay').style.display = 'none';
+                document.getElementById('dashboardContent').style.display = 'block';
+                // Trigger load from module
+                window.dispatchEvent(new Event('dashboard-auth-success'));
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+
+</html>

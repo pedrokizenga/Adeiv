@@ -1,4 +1,8 @@
 import { supabase } from './supabase.js';
+import { initTracking, getStoredUtms } from './tracking.js';
+
+// Initialize tracking immediately
+initTracking();
 
 // Reveal animations on scroll
 const reveals = document.querySelectorAll('.reveal, .fade-in, .sin-card, .testimonial-card, .faq-item, .features-list li');
@@ -87,7 +91,7 @@ const qualificationForm = document.getElementById('qualificationForm');
 
 // Masking logic for Clinic and WhatsApp
 if (qualificationForm) {
-    const clinicField = qualificationForm.querySelector('input[name="Clínica e Localização"]');
+
     const whatsappInput = qualificationForm.querySelector('input[name="WhatsApp"]');
 
     // WhatsApp Masking: +244 9XX XXX XXX
@@ -123,31 +127,7 @@ if (qualificationForm) {
         });
     }
 
-    // Clinic - Location Mask Logic (Estilo Data/Input Mascarado)
-    if (clinicField) {
-        clinicField.addEventListener('keydown', function (e) {
-            const value = e.target.value;
 
-            // Se o utilizador carregar em '/' e ainda não houver o separador
-            if (e.key === '/' && !value.includes(' / ')) {
-                e.preventDefault();
-                if (value.length > 0) {
-                    e.target.value = value.trim() + ' / ';
-                }
-            }
-        });
-
-        // Garantir o traço final no banco de dados
-        clinicField.addEventListener('blur', function (e) {
-            let value = e.target.value.trim();
-            if (value && value.includes(' / ')) {
-                e.target.value = value.replace(' / ', ' - ');
-            } else if (value && value.includes(' ') && !value.includes(' - ')) {
-                const parts = value.split(' ');
-                e.target.value = parts[0] + ' - ' + parts.slice(1).join(' ');
-            }
-        });
-    }
 
     qualificationForm.addEventListener('submit', async function (e) {
         e.preventDefault();
@@ -158,13 +138,17 @@ if (qualificationForm) {
         btn.classList.remove('pulse');
 
         const formData = new FormData(this);
-        const data = Object.fromEntries(formData.entries());
+        let data = Object.fromEntries(formData.entries());
+
+        // MERGE UTM DATA
+        const utms = getStoredUtms();
+        data = { ...data, ...utms };
 
         // Check if supabase is configured
         if (!supabase) {
             console.warn('Supabase não configurado. Redirecionando (Modo de Teste)...');
             setTimeout(() => {
-                window.location.href = '/obrigado';
+                window.location.href = '/obrigado.html';
             }, 1000);
             return;
         }
@@ -176,12 +160,12 @@ if (qualificationForm) {
 
             if (error) throw error;
 
-            window.location.href = '/obrigado';
+            window.location.href = '/obrigado.html';
         } catch (error) {
             console.error('Erro ao salvar no Supabase:', error);
             // Fallback para não travar o lead mesmo com erro no banco
             setTimeout(() => {
-                window.location.href = '/obrigado';
+                window.location.href = '/obrigado.html';
             }, 500);
         }
     });
